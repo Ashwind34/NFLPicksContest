@@ -3,7 +3,7 @@
 
 $player_id = $_SESSION['player_id'];;
 
-//query to pull most recent picks of logged in player
+//query to pull most recent picks of logged-in player
 
 $user_picks_table = $conn->prepare("SELECT					 
 								player_roster.user_name, 
@@ -39,13 +39,51 @@ $user_picks_table->execute();
 
 $user_pick_array = $user_picks_table->fetchALL(PDO::FETCH_ASSOC);
 
-//ASSIGN EACH PICK AS A VARIABLE
+//Create HTML table and assign output to $player_picks_table variable
 
-$pick_1 = $user_pick_array['0']['pick_1'];
-$pick_2 = $user_pick_array['0']['pick_2'];
-$pick_3 = $user_pick_array['0']['pick_3'];
-$pick_4 = $user_pick_array['0']['pick_4'];
-$pick_5 = $user_pick_array['0']['pick_5'];
+			ob_start();
+			
+			if (count($user_pick_array) > 0) {
+	
+		
+			echo '<table align="center" border="1" cellspacing="5" cellpadding="8">
+		
+			<tr><th align="center">Player</th>
+			<th align="center">Favorite Team</th>
+			<th align="center">Pick #1</th>
+			<th align="center">Pick #2</th>
+			<th align="center">Pick #3</th>
+			<th align="center">Pick #4</th>
+			<th align="center">Pick #5</th>
+			<th align="center">Time of Entry</th></tr>';
+			
+			// foreach loop to list out each row in the array	
+			
+			foreach ($user_pick_array as $row) {
+				
+					
+				echo 
+				'<tr><td align="center">' . $row['user_name'] . '</td>
+				<td align="center">' . $row['fav_team'] . '</td>
+				<td align="center">' . $row['pick_1'] . '</td>
+				<td align="center">' . $row['pick_2'] . '</td>
+				<td align="center">' . $row['pick_3'] . '</td>
+				<td align="center">' . $row['pick_4'] . '</td>
+				<td align="center">' . $row['pick_5'] . '</td>
+				<td align="center">' . $row['time_entered'] . '</td>';
+				echo '</tr>';
+				
+				
+			} 
+			
+			
+			echo  '</table>';
+			$player_picks_table = ob_get_clean();
+			
+			} else {
+				echo "query problem";
+	}
+	
 
 function PickDropdown($pick, $conn, $picknum, $weekmarker, $date) {
 	

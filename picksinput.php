@@ -5,6 +5,7 @@ session_start();
 require_once('pdo_connect.php');
 require_once('datecheck.php');
 require_once('player_picks_query.php');
+require_once ('weekly_schedule.php');
 
 if( isset($_SESSION['player_id'])) {
 	
@@ -48,7 +49,8 @@ if (empty($_POST['submit'])) {
 			$submit->BindParam(':player_id', $_SESSION['player_id']);
 			$submit->BindParam(':weekmarker', $weekmarker);
 			
-				//make sure statement executes correctly, then send to table with all player picks
+				//make sure statement executes correctly, then send to table with all player picks 
+				//MAY NEED TO SEND TO HOMEPAGE
 			
 				if ($submit->execute()) {
 					header("Location: /weekly_picks_table.php");
@@ -100,6 +102,8 @@ p {
 
 
 
+<!-- WILL NEED TO REMOVE DATE INPUT IN PickDropdown FUNCTION HERE AND IN player_picks_query.php -->
+
 <form action="picksinput.php" method="post">
 
 
@@ -126,7 +130,13 @@ p {
 	
 	<p><input type="submit" name="submit" value="Submit Your Picks"></p>
 	</form>
-</body>
+	
+	<br>
+	<p style=text-align:center; color:blue;></p>
+	<p style=text-align:center;><a href="index.php">Return to Home Page</a></p><br>
+	<p style=text-align:center;><?php echo $weekly_lines_table?></p>
+
+	</body>
 	
 	
 
