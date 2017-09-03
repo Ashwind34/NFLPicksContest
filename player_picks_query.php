@@ -84,6 +84,14 @@ $user_pick_array = $user_picks_table->fetchALL(PDO::FETCH_ASSOC);
 				echo "query problem";
 	}
 	
+//ASSIGN EACH PICK AS A VARIABLE
+
+$pick_1 = $user_pick_array['0']['pick_1'];
+$pick_2 = $user_pick_array['0']['pick_2'];
+$pick_3 = $user_pick_array['0']['pick_3'];
+$pick_4 = $user_pick_array['0']['pick_4'];
+$pick_5 = $user_pick_array['0']['pick_5'];
+	
 
 function PickDropdown($pick, $conn, $picknum, $weekmarker, $date) {
 	
